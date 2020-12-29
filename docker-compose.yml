@@ -1,0 +1,52 @@
+version: '3'
+services:
+  product_service:
+    container_name: "product_service"
+    build:
+      context: ./nab-product-service
+    environment:
+
+    networks:
+      - product_network
+    ports:
+      - "80:3000"
+    depends_on:
+      - product_db
+      - message_queue
+  product_db:
+    container_name: "product_db"
+    image: "mysql:latest"
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: ${PRODUCT_MYSQL_ROOTPASSWORD}
+      MYSQL_DATABASE: ${PRODUCT_MYSQL_DATABASE}
+      MYSQL_USER: ${PRODUCT_MYSQL_USER}
+    networks:
+      - product_network
+  message_queue:
+    container_name: "message_queue"
+    image: "bitnami/rabbitmq"
+    ports:
+    - 5672:5672
+    - 15672:15672
+#    networks:
+#      - activity_network
+#      - main_network
+    environment:
+      RABBITMQ_USERNAME: ${RABBITMQ_USERNAME}
+      RABBITMQ_PASSWORD: ${RABBITMQ_PASSWORD}
+
+networks:
+  product_network:
+    driver: bridge
+  activity_network:
+    driver: bridge
+  main_network:
+    driver: bridge
+
+#  default:
+#    driver: bridge
+#    ipam:
+#      config:
+#          - subnet: 172.16.57.0/24
