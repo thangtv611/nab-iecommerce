@@ -8,10 +8,10 @@ services:
       ENV: "development"
       PORT: 3000
       DB_NAME: ${PRODUCT_DATABASE_NAME}
-      DB_USERNAME: ${PRODUCT_DATABASE_USERNAME}
+      DB_USERNAME: 'root'
       DB_PASSWORD: ${PRODUCT_DATABASE_PASSWORD}
-      DB_HOST: "localhost"
-      AMQP_URL: amqp://${RABBITMQ_USERNAME}:${RABBITMQ_PASSWORD}@localhost
+      DB_HOST: product_db #use container_name refer to host
+      AMQP_URL: amqp://${RABBITMQ_USERNAME}:${RABBITMQ_PASSWORD}@message_queue #use container_name refer to host
       AMQP_USER_ACTIVITY_QUEUE: ${ACTIVITY_QUEUE}
     networks:
       - product_network
@@ -26,12 +26,9 @@ services:
     image: "mysql:latest"
     command: --default-authentication-plugin=mysql_native_password
     restart: always
-    ports:
-    - "3306:3306"
     environment:
-#      MYSQL_ROOT_PASSWORD: ${PRODUCT_MYSQL_ROOTPASSWORD}
-      MYSQL_DATABASE: ${PRODUCT_MYSQL_DATABASE}
-      MYSQL_USER: ${PRODUCT_MYSQL_USER}
+      MYSQL_ROOT_PASSWORD: ${PRODUCT_DATABASE_PASSWORD}
+      MYSQL_DATABASE: ${PRODUCT_DATABASE_NAME}
     networks:
       - product_network
   message_queue:
@@ -52,8 +49,8 @@ services:
       DB_NAME: ${ACTIVITY_DATABASE_NAME}
       DB_USERNAME: ${ACTIVITY_DATABASE_USERNAME}
       DB_PASSWORD: ${ACTIVITY_DATABASE_PASSWORD}
-      DB_HOST: "localhost"
-      AMQP_URL: amqp://${RABBITMQ_USERNAME}:${RABBITMQ_PASSWORD}@localhost
+      DB_HOST: activity_db  #use container_name refer to host
+      AMQP_URL: amqp://${RABBITMQ_USERNAME}:${RABBITMQ_PASSWORD}@message_queue  #use container_name refer to host
       AMQP_USER_ACTIVITY_QUEUE: ${ACTIVITY_QUEUE}
     networks:
       - activity_network
