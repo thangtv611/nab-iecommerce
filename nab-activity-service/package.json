@@ -4,10 +4,11 @@
   "description": "",
   "main": "src/index.js",
   "scripts": {
+    "start": "node src/index.js",
     "dev": "nodemon src/index.js",
-    "test": "mocha tests/**/*.test.js --package package.json",
-    "eslint": "./node_modules/.bin/eslint src/**",
-    "eslint-fix": "./node_modules/.bin/eslint --fix src/**"
+    "test": "nyc --reporter=html --reporter=text mocha tests/**/*.test.js",
+    "eslint": "./node_modules/.bin/eslint src/**/*.js",
+    "eslint-fix": "./node_modules/.bin/eslint --fix src/**/*.js"
   },
   "keywords": [],
   "author": "",
@@ -51,6 +52,7 @@
   "devDependencies": {
     "chai-http": "^4.3.0",
     "eslint": "^7.16.0",
-    "nodemon": "^2.0.6"
+    "nodemon": "^2.0.6",
+    "nyc": "^15.1.0"
   }
 }

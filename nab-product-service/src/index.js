@@ -14,6 +14,9 @@ const PORT = config.PORT;
 /* ignore log in test env */
 if (process.env.ENV !== 'test') {
     app.use(logger());
+
+    require('./schemas');
+    require('./queue/rabbitmq');
 }
 
 app.use(caughtException);
@@ -21,15 +24,6 @@ app.use(koaBody());
 require('./controllers')(router);
 app.use(router.routes());
 app.use(router.allowedMethods());
-
-require('./schemas');
-require('./queue/rabbitmq');
-// require('./utils/passport');
-
-/* development purpose */
-if (process.env.ENV === 'development') {
-    console.log('Dev Config: ', config);
-}
 
 /* handle run && shutdown */
 const terminate = async signal => {

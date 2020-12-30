@@ -1,4 +1,3 @@
-const { Op }                    = require('sequelize');
 const { models }                = require('../schemas');
 const { size, isEmpty, reduce } = require('lodash');
 

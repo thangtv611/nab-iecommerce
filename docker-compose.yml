@@ -5,11 +5,18 @@ services:
     build:
       context: ./nab-product-service
     environment:
-
+      ENV: "development"
+      PORT: 3000
+      DB_NAME: ${PRODUCT_DATABASE_NAME}
+      DB_USERNAME: ${PRODUCT_DATABASE_USERNAME}
+      DB_PASSWORD: ${PRODUCT_DATABASE_PASSWORD}
+      DB_HOST: "localhost"
+      AMQP_URL: amqp://${RABBITMQ_USERNAME}:${RABBITMQ_PASSWORD}@localhost
+      AMQP_USER_ACTIVITY_QUEUE: ${ACTIVITY_QUEUE}
     networks:
       - product_network
     ports:
-      - "80:3000"
+      - "3000:3000"
     depends_on:
       - product_db
       - message_queue
@@ -18,8 +25,10 @@ services:
     image: "mysql:latest"
     command: --default-authentication-plugin=mysql_native_password
     restart: always
+    ports:
+    - "3306:3306"
     environment:
-      MYSQL_ROOT_PASSWORD: ${PRODUCT_MYSQL_ROOTPASSWORD}
+#      MYSQL_ROOT_PASSWORD: ${PRODUCT_MYSQL_ROOTPASSWORD}
       MYSQL_DATABASE: ${PRODUCT_MYSQL_DATABASE}
       MYSQL_USER: ${PRODUCT_MYSQL_USER}
     networks:
@@ -27,15 +36,14 @@ services:
   message_queue:
     container_name: "message_queue"
     image: "bitnami/rabbitmq"
-    ports:
-    - 5672:5672
-    - 15672:15672
-#    networks:
-#      - activity_network
-#      - main_network
     environment:
       RABBITMQ_USERNAME: ${RABBITMQ_USERNAME}
       RABBITMQ_PASSWORD: ${RABBITMQ_PASSWORD}
+
+  activity_service:
+  activity_db:
+    image: "mongo:latest"
+
 
 networks:
   product_network:
@@ -45,6 +53,8 @@ networks:
   main_network:
     driver: bridge
 
+
+####################################
 #  default:
 #    driver: bridge
 #    ipam:

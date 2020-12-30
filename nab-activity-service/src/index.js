@@ -1,3 +1,4 @@
+const process  = require('process');
 const Koa      = require('koa');
 const Router   = require('koa-router');
 const koaBody  = require('koa-body');
@@ -25,15 +26,16 @@ app.use(router.allowedMethods());
 
 require('./queue/rabbitmq');
 
-// const mongoDbUrl = `mongodb://${config.DB_USERNAME}:${config.DB_PASSWORD}@${config.DB_HOST}:27017/${config.DB_NAME}`;
-const mongoDbUrl = `mongodb://localhost:27017/nab-activity`;
-mongoose.connect(mongoDbUrl, {useNewUrlParser: true})
-    .then(() => {
-        console.log('[DB] Connected');
-    })
-    .catch(err => {
-        console.error('[DB] Failed to connect');
-    });
+const mongoDbUrl = `mongodb://${config.DB_USERNAME}:${config.DB_PASSWORD}@${config.DB_HOST}:27017/${config.DB_NAME}`;
+// const mongoDbUrl = 'mongodb://localhost:27017/nab-activity';
+mongoose.connect(mongoDbUrl, {
+    useNewUrlParser   : true,
+    useUnifiedTopology: true,
+}).then(() => {
+    console.log('[DB] Connected');
+}).catch(err => {
+    console.error('[DB] Failed to connect. Error: ', err);
+});
 
 /* development purpose */
 if (process.env.ENV === 'development') {

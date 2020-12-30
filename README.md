@@ -1,12 +1,12 @@
 # NAB - Ecommerce MVP
 
 ## Components/infrastructure
-### Architecture design
+### System overview
 ![System component](./assets/images/architecture.png)
 ### Components
 
-- Product service: storage and serve API related to product.
-- Activity service: listen user activity and persist to database.
+- **Product service**: storage and serve API related to product.
+- **Activity service**: listening user activity from Product Service and persist to database.
 ## Workflow
 
 ## Database design
@@ -99,7 +99,32 @@
 - [AMQPLib](https://www.npmjs.com/package/amqplib)
 
 ## How to run in local
+### with docker-compose 
+> cp .env.example .env #first create .env file
+> 
+> docker-compose up --env-file=.env up #determine .env file for docker-compose use to load
+### without docker-compose
 
 ## Test api with CURL
-
+```
+curl --location --request POST 'localhost:3000/product/search' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "page_size": 10,
+    "page_number": 1,
+    "filter": [
+        "id",
+        "name",
+        "color",
+        "brand",
+        "price"
+    ],
+    "sort": {
+        "price": "asc"
+    },
+    "search": {
+        "name": "Iphone 12"
+    }
+}'
+```
 ## Contact

@@ -47,6 +47,7 @@ function startPublisher() {
         });
 
         pubChannel = ch;
+        // eslint-disable-next-line no-constant-condition
         while (true) {
             const m = offlinePubQueue.shift();
             if (!m) break;
@@ -58,7 +59,7 @@ function startPublisher() {
 function publish(exchange, routingKey, content) {
     try {
         pubChannel.publish(exchange, routingKey, content, {persistent: true},
-            function (err, ok) {
+            function (err) {
                 if (err) {
                     console.error('[AMQP] publish', err);
                     offlinePubQueue.push([exchange, routingKey, content]);
@@ -72,6 +73,7 @@ function publish(exchange, routingKey, content) {
 }
 
 // A worker that acks messages only if processed succesfully
+// eslint-disable-next-line no-unused-vars
 function startWorker() {
     amqpConn.createChannel(function (err, ch) {
         if (closeOnErr(err)) return;
@@ -120,8 +122,9 @@ function closeOnErr(err) {
 module.exports = {
     publish: data => {
         const payload = JSON.stringify(data);
-        console.log('Publish: ', payload)
-        publish("", queue, Buffer.from(payload))
+        console.log('Publish: ', payload);
+        // eslint-disable-next-line no-undef
+        publish('', queue, Buffer.from(payload));
     },
 };
 
