@@ -7,14 +7,12 @@
 
 - **Product service**: storage and serve API related to product.
 - **Activity service**: listening user activity from Product Service and persist to database.
-## Workflow
-
 ## Database design
 
 ## Principles / Design patterns
 
 ## Code structure
-### product service.
+### Product service
 ```javascript
 .
 ├── Dockerfile
