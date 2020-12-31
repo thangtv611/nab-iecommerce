@@ -86,7 +86,7 @@ function startWorker() {
         });
 
         ch.prefetch(10);
-        ch.assertQueue(queue, {durable: true}, function (err, _ok) {
+        ch.assertQueue(queue, {durable: true}, function (err) {
             if (closeOnErr(err)) return;
             ch.consume(queue, processMsg, {noAck: false});
             console.log('Worker is started');

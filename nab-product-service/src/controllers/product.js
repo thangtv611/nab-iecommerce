@@ -2,14 +2,14 @@ const Joi                     = require('joi');
 const {validateSearchProduct} = require('../utils/validation');
 const analysisRequest = require('../utils/analysisRequest');
 const productService          = require('../services/product');
-const { publish } = require('../queue');
+const { sendToQueue } = require('../services/queue');
 
 const getProducts = async ctx => {
     const {error, value} = validateSearchProduct(ctx.request.body);
-    publish({
+    sendToQueue({
         searchCriteria: value,
         agentInfo: analysisRequest(ctx),
-        username: 'user', // @TODO: mock username
+        username: 'user', // mock username
     });
 
     if (error) {

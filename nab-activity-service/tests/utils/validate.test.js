@@ -8,10 +8,7 @@ describe('utils/validate', () => {
       const payload = {
         filter: [],
         sort  : {
-          price: {
-            gte: 100,
-            lte: 200,
-          },
+          price: "asc"
         },
         search: {
           name: "Apple",
@@ -23,8 +20,8 @@ describe('utils/validate', () => {
       };
 
       const { error, value } = validateSearchProduct(payload);
-      assert.isNull(error);
-      assert.deepEqual(result, value);
+      assert.isUndefined(error);
+      assert.deepEqual(value, expect);
     });
   });
 });

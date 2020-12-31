@@ -7,7 +7,7 @@ services:
     environment:
       ENV: "development"
       PORT: 3000
-      MYSQL_URL: mysql://${PRODUCT_DATABASE_ROOTUSER}:${PRODUCT_DATABASE_PASSWORD}@${PRODUCT_DATABASE_HOST}:3306/${PRODUCT_DATABASE_NAME}
+      MYSQL_URL: mysql://${PRODUCT_DATABASE_ROOTUSER}:${PRODUCT_DATABASE_PASSWORD}@product_db:3306/${PRODUCT_DATABASE_NAME} #use container_name refer to host
       AMQP_URL: amqp://${RABBITMQ_USERNAME}:${RABBITMQ_PASSWORD}@message_queue #use container_name refer to host
       AMQP_USER_ACTIVITY_QUEUE: ${ACTIVITY_QUEUE}
     networks:
@@ -50,7 +50,7 @@ services:
     environment:
       ENV: "development"
       PORT: 3001
-      MONGODB_URL: mongodb://${ACTIVITY_DATABASE_USERNAME}:${ACTIVITY_DATABASE_PASSWORD}@${ACTIVITY_DATABASE_HOST}:27017/${ACTIVITY_DATABASE_NAME}?authSource=admin
+      MONGODB_URL: mongodb://${ACTIVITY_DATABASE_USERNAME}:${ACTIVITY_DATABASE_PASSWORD}@activity_db:27017/${ACTIVITY_DATABASE_NAME}?authSource=admin
       AMQP_URL: amqp://${RABBITMQ_USERNAME}:${RABBITMQ_PASSWORD}@message_queue  #use container_name refer to host
       AMQP_USER_ACTIVITY_QUEUE: ${ACTIVITY_QUEUE}
     networks:
@@ -64,6 +64,7 @@ services:
     ports:
       - "3001:3001"
   activity_db:
+    container_name: "activity_db"
     image: "mongo:latest"
     networks:
       - activity_network
