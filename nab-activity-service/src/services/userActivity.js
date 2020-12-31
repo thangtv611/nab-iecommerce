@@ -8,6 +8,11 @@ const writeUserActivity = ({username, searchCriteria, agentInfo}) => {
     }).save();
 };
 
+const getUserActivities = () => {
+    return userActivity.find();
+}
+
 module.exports = {
     writeUserActivity,
+    getUserActivities,
 };

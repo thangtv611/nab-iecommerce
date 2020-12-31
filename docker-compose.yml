@@ -7,10 +7,7 @@ services:
     environment:
       ENV: "development"
       PORT: 3000
-      DB_NAME: ${PRODUCT_DATABASE_NAME}
-      DB_USERNAME: 'root'
-      DB_PASSWORD: ${PRODUCT_DATABASE_PASSWORD}
-      DB_HOST: product_db #use container_name refer to host
+      MYSQL_URL: mysql://${PRODUCT_DATABASE_ROOTUSER}:${PRODUCT_DATABASE_PASSWORD}@${PRODUCT_DATABASE_HOST}:3306/${PRODUCT_DATABASE_NAME}
       AMQP_URL: amqp://${RABBITMQ_USERNAME}:${RABBITMQ_PASSWORD}@message_queue #use container_name refer to host
       AMQP_USER_ACTIVITY_QUEUE: ${ACTIVITY_QUEUE}
     networks:
@@ -33,6 +30,8 @@ services:
       MYSQL_DATABASE: ${PRODUCT_DATABASE_NAME}
     networks:
       - product_network
+    volumes:
+      - "./initial_databases/product.sql:/docker-entrypoint-initdb.d/product.sql"
   message_queue:
     container_name: "message_queue"
     image: "bitnami/rabbitmq"
@@ -41,6 +40,9 @@ services:
       RABBITMQ_PASSWORD: ${RABBITMQ_PASSWORD}
     networks:
       - communicate_network
+    # ports:
+    # - "5672:5672"
+    # - "15672:15672"
   activity_service:
     container_name: "activity_service"
     build:
@@ -48,10 +50,7 @@ services:
     environment:
       ENV: "development"
       PORT: 3001
-      DB_NAME: ${ACTIVITY_DATABASE_NAME}
-      DB_USERNAME: ${ACTIVITY_DATABASE_USERNAME}
-      DB_PASSWORD: ${ACTIVITY_DATABASE_PASSWORD}
-      DB_HOST: activity_db  #use container_name refer to host
+      MONGODB_URL: mongodb://${ACTIVITY_DATABASE_USERNAME}:${ACTIVITY_DATABASE_PASSWORD}@${ACTIVITY_DATABASE_HOST}:27017/${ACTIVITY_DATABASE_NAME}?authSource=admin
       AMQP_URL: amqp://${RABBITMQ_USERNAME}:${RABBITMQ_PASSWORD}@message_queue  #use container_name refer to host
       AMQP_USER_ACTIVITY_QUEUE: ${ACTIVITY_QUEUE}
     networks:
@@ -62,13 +61,15 @@ services:
       - message_queue
     links:
       - activity_db
+    ports:
+      - "3001:3001"
   activity_db:
     image: "mongo:latest"
     networks:
       - activity_network
     restart: always
-    ports:
-    - "4000:27017"
+    # ports:
+    # - "27017:27017"
     environment:
       MONGO_INITDB_ROOT_USERNAME: ${ACTIVITY_DATABASE_USERNAME}
       MONGO_INITDB_ROOT_PASSWORD: ${ACTIVITY_DATABASE_PASSWORD}

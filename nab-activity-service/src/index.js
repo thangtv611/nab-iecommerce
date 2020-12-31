@@ -26,9 +26,8 @@ app.use(router.allowedMethods());
 
 require('./queue/rabbitmq');
 
-const mongoDbUrl = `mongodb://${config.DB_USERNAME}:${config.DB_PASSWORD}@${config.DB_HOST}:27017/${config.DB_NAME}?authSource=admin`;
+const mongoDbUrl = config.MONGODB_URL;
 console.debug('[MongoDB Url]: ', mongoDbUrl)
-// const mongoDbUrl = 'mongodb://localhost:27017/nab-activity';
 mongoose.connect(mongoDbUrl, {
     useNewUrlParser   : true,
     useUnifiedTopology: true,
