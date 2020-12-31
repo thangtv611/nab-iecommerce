@@ -21,6 +21,8 @@ services:
     depends_on:
       - product_db
       - message_queue
+    links:
+      - product_db
   product_db:
     container_name: "product_db"
     image: "mysql:latest"
@@ -55,11 +57,18 @@ services:
     networks:
       - activity_network
       - communicate_network
+    depends_on:
+      - activity_db
+      - message_queue
+    links:
+      - activity_db
   activity_db:
     image: "mongo:latest"
     networks:
       - activity_network
     restart: always
+    ports:
+    - "4000:27017"
     environment:
       MONGO_INITDB_ROOT_USERNAME: ${ACTIVITY_DATABASE_USERNAME}
       MONGO_INITDB_ROOT_PASSWORD: ${ACTIVITY_DATABASE_PASSWORD}

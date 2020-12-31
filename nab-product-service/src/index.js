@@ -19,6 +19,10 @@ if (process.env.ENV !== 'test') {
     require('./queue/rabbitmq');
 }
 
+if (process.env.ENV === 'development') {
+    console.log('[CONFIG LOADED]', config);
+}
+
 app.use(caughtException);
 app.use(koaBody());
 require('./controllers')(router);
