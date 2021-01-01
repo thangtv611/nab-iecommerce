@@ -1,0 +1,13 @@
+{
+  "check-coverage": true,
+  "all": true,
+  "include": [
+    "src/**/*.js"
+  ],
+  "exclude": [
+    "tests/**/*.test.js",
+    "src/schemas",
+    "src/queue",
+    "src/config"
+  ]
+}
