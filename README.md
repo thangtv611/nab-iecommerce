@@ -5,51 +5,32 @@
 ![System component](./assets/images/architecture.png)
 ### Components
 
-- **Product service**: storage and serve API related to product.
-- **Activity service**: listening user activity from Product Service and persist to database.
+- **Product service**: serve and storage bussiness related to product.
+- **Activity service**: listen **user activity** and persist to database, also serve API for marketing, analyzing.
 ## Database design
 
 ## Principles / Design patterns
 
 ## Code structure
-### Product service
+
+Structure for both services:
 ```javascript
-.
-├── Dockerfile
+├── Dockerfile // packaging service
 ├── .dockerignore
-├── .env.development
-├── .eslintrc.json
-├── .gitignore
+├── .env.development // environment variables
+├── .eslintrc.json // linter config
+├── .gitignore // gitignore
 ├── package.json
 ├── src
-│   ├── config
-│   │   └── index.js
-│   ├── controllers
-│   │   ├── index.js
-│   │   ├── product.js
-│   │   └── user.js
-│   ├── index.js
+│   ├── config // read config from .env and storage for apps
+│   ├── controllers // config routes && register controllers for each routes
+│   ├── index.js // entry point for apps
 │   ├── middlewares
-│   │   └── caughtException.js
 │   ├── queue
-│   │   ├── index.js
-│   │   └── rabbitmq
-│   │       └── index.js
-│   ├── schemas
-│   │   ├── index.js
-│   │   ├── product.js
-│   │   └── user.js
+│   ├── schemas // 
 │   ├── services
-│   │   └── product.js
 │   └── utils
-│       ├── analysisRequest.js
-│       └── validation.js
 ├── tests
-│   ├── index.test.js
-│   └── utils
-│       └── validate.test.js
-└── wait-for-it.sh
-
 ```
 
 
@@ -90,9 +71,9 @@
         └── validate.test.js
 
 ```
-## Framework
-- [KoaJS](https://koajs.com/)
-- [Sequelize ORM](https://sequelize.org/)
+## Framworks
+- [Koa](https://koajs.com/)
+- [Sequelize](https://sequelize.org/) as MySQL ORM.
 - [Mongoose](https://mongoosejs.com/)
 - [AMQPLib](https://www.npmjs.com/package/amqplib)
 
