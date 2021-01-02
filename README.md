@@ -1,15 +1,5 @@
 # iCommerce
 
-## Prerequisites
-### For individual run
-- [Node.js (v12.17.0 or higher)](https://nodejs.org)
-- [MongoDB](https://www.mongodb.com/)
-- [MySQL](https://www.mysql.com/)
-- [RabbitMQ](https://www.rabbitmq.com/)
-### For Docker
-- [Docker](https://www.docker.com/)
-- [docker-compose](https://docs.docker.com/compose/)
-
 ## Components
 ### System overview
 ![System component](./assets/images/architecture.png)
@@ -53,6 +43,16 @@ Structure for both services:
 - [mongoose](https://mongoosejs.com/)
 - [amqplib](https://www.npmjs.com/package/amqplib)
 
+## Prerequisites
+### For individual run
+- [Node.js (v12.17.0 or higher)](https://nodejs.org)
+- [MongoDB](https://www.mongodb.com/)
+- [MySQL](https://www.mysql.com/)
+- [RabbitMQ](https://www.rabbitmq.com/)
+### For Docker
+- [Docker](https://www.docker.com/)
+- [docker-compose](https://docs.docker.com/compose/)
+
 ## How to run in local
 ### with docker-compose
 
@@ -81,7 +81,7 @@ curl --location --request POST 'localhost:3000/product/search' \
 }'
 ```
 
-### 2.search all, specific field
+### 2. search all, specific field
 
 ```
 curl --location --request POST 'localhost:3000/product/search' \
