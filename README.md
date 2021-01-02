@@ -151,6 +151,9 @@ npm run test
 
 ### Activity service
 
+![Activity](./assets/images/ut_activity.png)
+
+
 ## Code coverage detail
 Locate the file **coverage/index.html** each repo and open it on Browser to see.
 ## Check syntax, code convention
