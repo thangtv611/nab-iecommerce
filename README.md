@@ -130,7 +130,8 @@ curl --location --request POST 'localhost:3000/product/search' \
         "price": "desc"
     },
     "search": {
-        "brand": "Apple"
+        "brand": "Apple",
+        "color": "RED"
     }
 }'
 ```
