@@ -40,9 +40,9 @@ services:
       RABBITMQ_PASSWORD: ${RABBITMQ_PASSWORD}
     networks:
       - communicate_network
-    # ports:
-    # - "5672:5672"
-    # - "15672:15672"
+#    ports:
+#      - "5672:5672"
+#      - "15672:15672"
   activity_service:
     container_name: "activity_service"
     build:

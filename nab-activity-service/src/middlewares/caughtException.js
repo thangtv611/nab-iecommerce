@@ -1,16 +1,12 @@
+const {StatusCodes} = require('http-status-codes');
+
 const caughtException = async (ctx, next) => {
     try {
         await next();
     } catch (err) {
-        ctx.status = 200;
-        ctx.body   = {
-            status: {
-                code   : err.statusCode || err.status || 500,
-                message: 'failed'
-            },
-            body  : {
-                message: err.toString()
-            },
+        ctx.status = err.statusCode || err.status || StatusCodes.INTERNAL_SERVER_ERROR;
+        ctx.body = {
+            message: err.toString()
         };
     }
 };

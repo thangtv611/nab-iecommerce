@@ -12,7 +12,7 @@ describe('middlewares', () => {
 
             assert.isTrue(!isEmpty(ctx));
             assert.isTrue(!isEmpty(get(ctx, 'body')));
-            assert.equal(ctx.status, 200);
+            assert.equal(ctx.status, 500);
         });
 
         it('should not caught error cause next middleware not throw error', async () =>  {

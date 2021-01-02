@@ -10,7 +10,8 @@
     "src/queue",
     "src/config",
     "src/controllers/index.js",
-    "src/index.js"
+    "src/index.js",
+    "src/handlers/index.js"
   ],
   "branches": 70,
   "lines": 70,

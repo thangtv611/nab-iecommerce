@@ -1,16 +1,16 @@
-const userActivity = require('../schemas/userActivity');
+const ActivityModel = require('../schemas/userActivity');
 
 const writeUserActivity = ({username, searchCriteria, agentInfo}) => {
-    return new userActivity({
+    return ActivityModel.create({
         username: username,
         searchCriteria: JSON.stringify(searchCriteria),
-        agentInfo     : JSON.stringify(agentInfo)
-    }).save();
+        agentInfo: JSON.stringify(agentInfo)
+    });
 };
 
 const getUserActivities = () => {
-    return userActivity.find();
-}
+    return ActivityModel.find();
+};
 
 module.exports = {
     writeUserActivity,

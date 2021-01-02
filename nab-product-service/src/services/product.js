@@ -32,11 +32,6 @@ const getAllProduct = async ({ filter, sort, search, page_size, page_number }) =
     };
 };
 
-const createProduct = payload => {
-    return new models.Products(payload).save();
-};
-
 module.exports = {
     getAllProduct,
-    createProduct,
 };

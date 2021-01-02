@@ -70,8 +70,7 @@ Structure for both services:
 5. Run **npm run start** for each service.
 
 ## Test API with cURL
-### searching products
-*  search all, include all field
+### 1. search all, include all field
 ```
 curl --location --request POST 'localhost:3000/product/search' \
 --header 'Content-Type: application/json' \
@@ -82,7 +81,7 @@ curl --location --request POST 'localhost:3000/product/search' \
 }'
 ```
 
-* search all, specific field
+### 2.search all, specific field
 
 ```
 curl --location --request POST 'localhost:3000/product/search' \
@@ -98,7 +97,7 @@ curl --location --request POST 'localhost:3000/product/search' \
 }'
 ```
 
-* search and sort
+### 3. search and sort
 ```
 curl --location --request POST 'localhost:3000/product/search' \
 --header 'Content-Type: application/json' \
@@ -115,7 +114,7 @@ curl --location --request POST 'localhost:3000/product/search' \
     }
 }'
 ```
-* search with value
+### 4. search with value
 ```
 curl --location --request POST 'localhost:3000/product/search' \
 --header 'Content-Type: application/json' \
@@ -135,16 +134,25 @@ curl --location --request POST 'localhost:3000/product/search' \
     }
 }'
 ```
-### get user activities (demonstrate activity service works well)
+### 5. get user activities (demonstrate activity service works well)
 ```
 curl --location --request GET 'localhost:3001/activities' \
 --header 'Content-Type: application/json'
 ```
 
-## Unit test
+## Unit test: cover >= 70%
 ```
 npm run test
 ```
+
+### Product service
+
+![Product](./assets/images/ut_product.png)
+
+### Activity service
+
+## Code coverage detail
+Locate the file **coverage/index.html** each repo and open it on Browser to see.
 ## Check syntax, code convention
 ```
 npm run eslint
