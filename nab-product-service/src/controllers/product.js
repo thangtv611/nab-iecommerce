@@ -6,18 +6,17 @@ const {StatusCodes} = require('http-status-codes');
 
 const getProducts = async ctx => {
     const {error, value} = validateSearchProduct(ctx.request.body);
+    if (error) {
+        throw error;
+    }
+
     sendToQueue({
         searchCriteria: value,
         agentInfo: analysisRequest(ctx),
         username: 'user', // mock username
     });
-
-    if (error) {
-        throw error;
-    }
-
-    // console.log(value);
-
+ 
+    // we dont need to catch error here, the caughtException middleware handles this.
     ctx.status = StatusCodes.OK;
     ctx.body = await productService.getAllProduct(value);
 };
