@@ -7,16 +7,12 @@
 
 - **Product service**: serve and storage bussiness related to product.
 - **Activity service**: listen **user activity** and persist to database, also serve API for marketing, analyzing.
-## Database design
+## Database
 
-### Product
-![Product Model](./assets/images/product_service_product_table.PNG)
-
-### User Activity
-![Product Model](./assets/images/activity_service_activities_collection.png)
+![](./assets/images/db.png)
 
 ## Code structure
-Structure for both services:
+Structure for both service:
 
 ```
 ├── Dockerfile <- packaging service
@@ -37,13 +33,13 @@ Structure for both services:
 ├── tests <- include unit test
 ```
 
-## Framworks
+## Framework
 - [Koa](https://koajs.com/)
 - [squelize](https://sequelize.org/)
 - [mongoose](https://mongoosejs.com/)
 - [amqplib](https://www.npmjs.com/package/amqplib)
 
-## Prerequisites
+## Prerequisite
 ### For individual run
 - [Node.js (v12.17.0 or higher)](https://nodejs.org)
 - [MongoDB](https://www.mongodb.com/)
@@ -63,11 +59,13 @@ Structure for both services:
 
 ### without docker-compose
 
-1. Install mongodb, mysql, and rabbitmq (1)
-2. Copy .env.development to .env for each services
-3. Update variables in .env file matching with connection of software (1)
+For each service, following below step:
+
+1. Install mongodb, mysql, and rabbitmq on your local machine (1)
+2. Copy .env.development to .env for each service.
+3. Provide connection information of the software at (1) to .env for each service.
 4. Run **npm install** 
-5. Run **npm run start** for each service.
+5. Run **npm run start**
 
 ## Test API with cURL
 ### 1. search all, include all field
